@@ -1,0 +1,8 @@
+name: Hello World
+description: 'A module that says hello to the world.'
+type: module
+core_version_requirement: ^10
+configure: hello_world.greeting_form
+package: Custom
+dependencies:
+  - drupal:views
