@@ -20,5 +20,8 @@ services:
 
   hello_world.logger.mail_logger:
     class: Drupal\hello_world\Logger\MailLogger
+    arguments: 
+      - "@config.factory"
+      - '@logger.log_message_parser'
     tags:
       - name: logger

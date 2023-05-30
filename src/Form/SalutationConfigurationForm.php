@@ -72,7 +72,7 @@ class SalutationConfigurationForm extends ConfigFormBase {
             ->set('salutation', $form_state->getValue('salutation'))
             ->save();
 
-        $this->logger->info('The Hello World salutation has been changed to: @message', ['@message' => $form_state->getValue('salutation')]);
+        $this->logger->error('The Hello World salutation has been changed to: %message', ['%message' => $form_state->getValue('salutation')]);
 
         parent::submitForm($form, $form_state);
     }
