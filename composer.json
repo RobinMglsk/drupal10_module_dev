@@ -1,0 +1,6 @@
+{
+    "name": "mglsk/hello_world",
+    "description": "My first module",
+    "type": "drupal-module",
+    "require": {}
+}
