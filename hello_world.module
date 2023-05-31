@@ -5,6 +5,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Render\BubbleableMetadata;
 
 /**
  * Implements hook_help().
@@ -30,6 +31,52 @@ function hello_world_mail($key, &$message, $params)
       $message['from'] = \Drupal::config('system.site')->get('mail');
       $message['subject'] = t('There is an error on your website');
       $message['body'][] = $params['message'];
+
+      $userMessage = 'The user that is logged in: [current-user:name] - [hello_world:salutation].';
+      $message['body'][] = \Drupal::token()->replace($userMessage, ['current-user' => \Drupal::currentUser()]);
       break;
   }
+}
+
+/**
+ * Implement hook_token_info()
+ */
+function hello_world_token_info()
+{
+  $type = [
+    'name' => t('Hello World'),
+    'description' => t('Token related to the Hello World module.'),
+  ];
+
+  $tokens['salutation'] = [
+    'name' => t('Salutation'),
+    'description' => t('The Hello World salutation value.'),
+  ];
+
+  return [
+    'types' => ['hello_world' => $type],
+    'tokens' => ['hello_world' => $tokens],
+  ];
+}
+
+/**
+ * Implement hook_tokens()
+ */
+function hello_world_tokens($type, $tokens, array $dta, array $options,  $bubbleable_metadata)
+{
+  $replacements = [];
+
+  if($type === 'hello_world'){
+    foreach($tokens as $name => $original){
+      switch($name){
+        case 'salutation':
+          $replacements[$original] = \Drupal::service('hello_world.salutation')->getSalutation();
+          $config = \Drupal::config('hello_world.custom_salutation');
+          $bubbleable_metadata->addCacheableDependency($config);
+          break;
+      }
+    }
+  }
+
+  return $replacements;
 }
