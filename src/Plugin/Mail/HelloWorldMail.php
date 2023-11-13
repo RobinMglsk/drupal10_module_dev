@@ -13,7 +13,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 // TODO move to config
-const API_KEY = "some_key";
+const API_KEY = "api-B39421B6FF2811ED9A8CF23C91BBF4A0";
 
 /**
  * Defines the Hello World mail plugin

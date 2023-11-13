@@ -80,3 +80,29 @@ function hello_world_tokens($type, $tokens, array $dta, array $options,  $bubble
 
   return $replacements;
 }
+
+/**
+ * Implement hook_theme()
+ */
+function hello_world_theme($existing, $type, $theme, $path)
+{
+  return [
+    'hello_world_salutation' => [
+      'variables' => [
+        'salutation' => NULL,
+        'target' => NULL,
+        'overridden' => FALSE
+      ]
+    ]
+  ];
+}
+
+/**
+ * Default preprocessor function for the hello_world_salutation theme hook
+ */
+function template_hello_world_salutation_preprocess(&$variables)
+{
+  $variables['attributes'] = [
+    'class' => ['salutation'],
+  ];
+}
